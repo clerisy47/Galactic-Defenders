@@ -1,5 +1,5 @@
 #include "game.hpp"
-#include<iostream>
+#include <iostream>
 Game::Game()
 {
 }
@@ -40,18 +40,21 @@ void Game::update()
 	{
 		laser.move();
 		deleteInactiveLasers();
-		std::cout<<"Vector Size: "<<player.lasers.size() <<std::endl;
+		std::cout << "Vector Size: " << player.lasers.size() << std::endl;
 	}
 }
 
 void Game::deleteInactiveLasers()
 {
-    for(auto it = player.lasers.begin(); it != player.lasers.end();)
+	for (auto it = player.lasers.begin(); it != player.lasers.end();)
 	{
-        if(!it -> active) {
-            it = player.lasers.erase(it);
-        } else {
-            ++ it;
-        }
-    }
+		if (!it->active)
+		{
+			it = player.lasers.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
 }

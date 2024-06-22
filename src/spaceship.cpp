@@ -5,7 +5,7 @@ Spaceship::Spaceship()
 	speed = 10;
 	spaceship = LoadTexture("../assets/spaceships/tiny_ship13.png");
 	position.x = (GetScreenWidth() - spaceship.width) / 2;
-	position.y = GetScreenHeight() - spaceship.height - 30;
+	position.y = GetScreenHeight() - spaceship.height - 60;
 	lastFireTime = 0.0;
 }
 

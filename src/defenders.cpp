@@ -17,7 +17,7 @@ int main()
 
 	Game game;
 
-	while (WindowShouldClose() == false)
+	while (!WindowShouldClose())
 	{
 		game.handleInput();
 
