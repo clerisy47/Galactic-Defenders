@@ -3,7 +3,7 @@
 
 Laser::Laser(Vector2 position, int speed)
 {
-	image = LoadTexture("Graphics/Projectiles/laser1.png");
+	image = LoadTexture("../Graphics/Projectiles/laser1.png");
 	this->speed = speed;
 	this->position = position;
 	active = true;

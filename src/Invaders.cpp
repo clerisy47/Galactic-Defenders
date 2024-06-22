@@ -13,7 +13,7 @@ namespace Window
 int main() {
 
 	InitWindow(Window::width, Window::height, "Space Invaders");
-	Texture2D background = LoadTexture("Graphics/Background/background2.png");
+	Texture2D background = LoadTexture("../Graphics/Background/background2.png");
 	SetTargetFPS(60); // Set the frames per second to 60
 
 	Game game;
