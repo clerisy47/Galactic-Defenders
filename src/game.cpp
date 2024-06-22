@@ -1,7 +1,10 @@
 #include "game.hpp"
 #include <iostream>
+
 Game::Game()
+	: player(Vector2{static_cast<float>(GetScreenWidth() / 2), static_cast<float>(GetScreenHeight() - 100)}, 10, "../assets/spaceships/player/tiny_ship13.png")
 {
+	// Other initialization if needed
 }
 
 Game::~Game()
