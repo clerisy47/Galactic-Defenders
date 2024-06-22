@@ -2,8 +2,6 @@
 #include <raylib.h>
 #include "game.h"
 
-using namespace std;
-
 namespace Window
 {
 	const int width = 1440;
