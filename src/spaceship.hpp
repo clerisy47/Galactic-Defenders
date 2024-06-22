@@ -1,7 +1,7 @@
 #pragma once
 
 #include <raylib.h>
-#include "laser.h"
+#include "laser.hpp"
 #include <vector>
 
 class Spaceship
