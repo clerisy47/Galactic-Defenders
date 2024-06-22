@@ -1,9 +1,9 @@
 #include "spaceship.hpp"
 
-Spaceship::Spaceship(const Vector2& position, int speed, const char* path)
-    : position(position), speed(speed), lastFireTime(0.0)
+Spaceship::Spaceship(const Vector2 &position, int speed, const char *path)
+	: position(position), speed(speed), lastFireTime(0.0)
 {
-    spaceship = LoadTexture(path);
+	spaceship = LoadTexture(path);
 }
 
 Spaceship::~Spaceship()
@@ -41,6 +41,46 @@ void Spaceship::fireLaser()
 	if (GetTime() - lastFireTime >= 0.2)
 	{
 		lastFireTime = GetTime();
-		lasers.push_back(Laser(Vector2{position.x + spaceship.width / 2 - 5, position.y - 10}, -10));
+		lasers.push_back(Laser(Vector2{position.x + spaceship.width / 2 - 5, position.y - 10}, -10, "../assets/projectiles/laser1.png"));
+	}
+}
+
+//modifications - shrine
+
+Vector2 Spaceship::getPosition()
+{
+	return position;
+}
+
+//enemy spaceship
+
+EnemySpaceship::EnemySpaceship(const Vector2 &position, int speed, const char *path)
+	: Spaceship(position, speed, path)
+{
+}
+
+EnemySpaceship::~EnemySpaceship()
+{
+	UnloadTexture(spaceship);
+}
+
+void EnemySpaceship::move(const Vector2 &playerPostion)
+{
+	if (position.x > playerPostion.x)
+	{
+		position.x -= speed;
+	}
+	else if (position.x < playerPostion.x)
+	{
+		position.x += speed;
+	}
+}
+
+void EnemySpaceship::fireLaser()
+{
+	if (GetTime() - lastFireTime >= 0.5)
+	{
+		lastFireTime = GetTime();
+		lasers.push_back(Laser(Vector2{position.x + spaceship.width / 2 - 10, position.y + 20}, 8, "../assets/projectiles/laser2.png"));
 	}
 }

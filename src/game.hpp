@@ -4,6 +4,7 @@
 class Game {
 	private:
 		Spaceship player;
+		EnemySpaceship enemy;
 public:
 	Game();
 	~Game();
