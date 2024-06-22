@@ -1,5 +1,5 @@
 #pragma once
-#include"spaceship.h"
+#include"spaceship.hpp"
 
 class Game {
 	private:

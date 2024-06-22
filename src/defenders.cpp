@@ -1,6 +1,6 @@
 #include <iostream>
 #include <raylib.h>
-#include "game.h"
+#include "game.hpp"
 
 namespace Window
 {

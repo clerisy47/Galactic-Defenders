@@ -1,4 +1,4 @@
-#include "spaceship.h"
+#include "spaceship.hpp"
 
 Spaceship::Spaceship()
 {

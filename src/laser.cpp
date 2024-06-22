@@ -1,4 +1,4 @@
-#include "laser.h"
+#include "laser.hpp"
 #include <iostream>
 
 Laser::Laser(Vector2 position, int speed)
