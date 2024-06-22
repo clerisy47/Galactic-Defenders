@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(Invaders)
+project(defenders)
 
 # Set C++ standard (change as needed)
 set(CMAKE_CXX_STANDARD 14)
@@ -14,10 +14,10 @@ file(GLOB_RECURSE SOURCES "src/*.cpp")
 file(GLOB_RECURSE HEADERS "src/*.h")
 
 # Add executable target
-add_executable(Invaders ${SOURCES} ${HEADERS})
+add_executable(defenders ${SOURCES} ${HEADERS})
 
 # Set include directory for headers (optional but recommended)
-target_include_directories(Invaders PRIVATE src)
+target_include_directories(defenders PRIVATE src)
 
 # Link raylib library to your project
-target_link_libraries(Invaders PRIVATE raylib)
+target_link_libraries(defenders PRIVATE raylib)
