@@ -33,10 +33,10 @@ void Spaceship::moveRight()
 
 void Spaceship::limitMovement()
 {
-	if (position.x <= 20)
-		position.x = 20;
-	if (position.x >= GetScreenWidth() - spaceship.width - 20)
-		position.x = GetScreenWidth() - spaceship.width - 20;
+	if (position.x <= 10)
+		position.x = 10;
+	if (position.x >= GetScreenWidth() - spaceship.width - 10)
+		position.x = GetScreenWidth() - spaceship.width - 10;
 }
 
 void Spaceship::fireLaser()
