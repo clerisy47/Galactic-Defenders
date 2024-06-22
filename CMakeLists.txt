@@ -11,7 +11,7 @@ find_package(raylib 3.5 REQUIRED)
 
 # Add all your source files from src directory
 file(GLOB_RECURSE SOURCES "src/*.cpp")
-file(GLOB_RECURSE HEADERS "src/*.h")
+file(GLOB_RECURSE HEADERS "src/*.hpp")
 
 # Add executable target
 add_executable(defenders ${SOURCES} ${HEADERS})
