@@ -4,7 +4,7 @@
 
 namespace Window
 {
-	const int width = 1440;
+	const int width = 950;
 	const int height = 900;
 }
 

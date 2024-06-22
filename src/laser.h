@@ -7,10 +7,11 @@ private:
 	Vector2 position;
 	int speed;
 	Texture2D image;
-	bool active;
+	
 public:
 	Laser(Vector2 position, int speed);
 	void draw();
 	void move();
+	bool active;
 
 };
