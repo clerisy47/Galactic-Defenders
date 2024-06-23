@@ -1,8 +1,16 @@
 #include "game.hpp"
-#include<iostream>
+#include <iostream>
+
+
+// added player via constructor - shrine
+// note - speed of player must be some multiple of enemy i.e 5*2 = 10 pixel reasons.
 Game::Game()
+	: player(Vector2{static_cast<float>(GetScreenWidth() / 2), static_cast<float>(GetScreenHeight() - 100)}, 10, "../assets/spaceships/player/tiny_ship13.png"),
+	  enemy(Vector2{static_cast<float>(GetScreenWidth() / 2), 20}, 5, "../assets/spaceships/enemy/enemyship2.png")
+	  
+
 {
-	obstacles = createObstacles();
+	obstacles = createObstacles();// Other initialization if needed
 }
 
 Game::~Game()
@@ -12,16 +20,22 @@ Game::~Game()
 void Game::draw()
 {
 	player.draw();
+	enemy.draw();
 
 	for (auto &laser : player.lasers)
 	{
 		laser.draw();
 	}
 
-	for (auto& obstacle: obstacles)
+	// Enemy laser drawing - shrine
+	for (auto &laser : enemy.lasers)
 	{
-		obstacle.draw();
+		laser.draw();
 	}
+	 for(auto& obstacle: obstacles) {
+        obstacle.draw();
+    }
+
 }
 
 void Game::handleInput()
@@ -46,7 +60,15 @@ void Game::update()
 	{
 		laser.move();
 		deleteInactiveLasers();
-		std::cout<<"Vector Size: "<<player.lasers.size() <<std::endl;
+		std::cout << "Vector Size: " << player.lasers.size() << std::endl;
+	}
+
+	// Enemy movement and firing - shrine
+	enemy.move(player.getPosition());
+	enemy.fireLaser();
+	for (auto &laser : enemy.lasers)
+	{
+		laser.move();
 	}
 }
 
@@ -64,12 +86,15 @@ std::vector<Obstacle> Game::createObstacles()
 
 void Game::deleteInactiveLasers()
 {
-    for(auto it = player.lasers.begin(); it != player.lasers.end();)
+	for (auto it = player.lasers.begin(); it != player.lasers.end();)
 	{
-        if(!it -> active) {
-            it = player.lasers.erase(it);
-        } else {
-            ++ it;
-        }
-    }
+		if (!it->active)
+		{
+			it = player.lasers.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
 }

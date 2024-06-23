@@ -1,6 +1,6 @@
 #pragma once
 
-#include<raylib.h>
+#include <raylib.h>
 
 class  Laser {
 private:
@@ -9,7 +9,7 @@ private:
 	Texture2D image;
 	
 public:
-	Laser(Vector2 position, int speed);
+	Laser(Vector2 position, int speed, const char* path);
 	void draw();
 	void move();
 	bool active;

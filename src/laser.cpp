@@ -1,9 +1,9 @@
 #include "laser.hpp"
 #include <iostream>
 
-Laser::Laser(Vector2 position, int speed)
+Laser::Laser(Vector2 position, int speed, const char *path)
 {
-	image = LoadTexture("../assets/projectiles/laser1.png");
+	image = LoadTexture(path);
 	this->speed = speed;
 	this->position = position;
 	active = true;

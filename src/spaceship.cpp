@@ -1,12 +1,9 @@
 #include "spaceship.hpp"
 
-Spaceship::Spaceship()
+Spaceship::Spaceship(const Vector2 &position, int speed, const char *path)
+	: position(position), speed(speed), lastFireTime(0.0)
 {
-	speed = 10;
-	spaceship = LoadTexture("../assets/spaceships/tiny_ship13.png");
-	position.x = (GetScreenWidth() - spaceship.width) / 2;
-	position.y = GetScreenHeight() - spaceship.height - 30;
-	lastFireTime = 0.0;
+	spaceship = LoadTexture(path);
 }
 
 Spaceship::~Spaceship()
@@ -33,10 +30,10 @@ void Spaceship::moveRight()
 
 void Spaceship::limitMovement()
 {
-	if (position.x <= 20)
-		position.x = 20;
-	if (position.x >= GetScreenWidth() - spaceship.width - 20)
-		position.x = GetScreenWidth() - spaceship.width - 20;
+	if (position.x <= 10)
+		position.x = 10;
+	if (position.x >= GetScreenWidth() - spaceship.width - 10)
+		position.x = GetScreenWidth() - spaceship.width - 10;
 }
 
 void Spaceship::fireLaser()
@@ -44,6 +41,46 @@ void Spaceship::fireLaser()
 	if (GetTime() - lastFireTime >= 0.2)
 	{
 		lastFireTime = GetTime();
-		lasers.push_back(Laser(Vector2{position.x + spaceship.width / 2 - 10, position.y - 10}, -10));
+		lasers.push_back(Laser(Vector2{position.x + spaceship.width / 2 - 5, position.y - 10}, -10, "../assets/projectiles/laser1.png"));
+	}
+}
+
+//modifications - shrine
+
+Vector2 Spaceship::getPosition()
+{
+	return position;
+}
+
+//enemy spaceship
+
+EnemySpaceship::EnemySpaceship(const Vector2 &position, int speed, const char *path)
+	: Spaceship(position, speed, path)
+{
+}
+
+EnemySpaceship::~EnemySpaceship()
+{
+	UnloadTexture(spaceship);
+}
+
+void EnemySpaceship::move(const Vector2 &playerPostion)
+{
+	if (position.x > playerPostion.x)
+	{
+		position.x -= speed;
+	}
+	else if (position.x < playerPostion.x)
+	{
+		position.x += speed;
+	}
+}
+
+void EnemySpaceship::fireLaser()
+{
+	if (GetTime() - lastFireTime >= 0.5)
+	{
+		lastFireTime = GetTime();
+		lasers.push_back(Laser(Vector2{position.x + spaceship.width / 2 - 10, position.y + 20}, 8, "../assets/projectiles/laser2.png"));
 	}
 }

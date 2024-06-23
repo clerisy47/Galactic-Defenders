@@ -2,7 +2,6 @@
 #include <raylib.h>
 #include "game.hpp"
 
-
 namespace Window
 {
 	const int width = 1440;
@@ -17,8 +16,8 @@ int main()
 	SetTargetFPS(60);
 
 	Game game;
-	
-	while (WindowShouldClose() == false)
+
+	while (!WindowShouldClose())
 	{
 		game.handleInput();
 
