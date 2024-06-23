@@ -1,4 +1,4 @@
-#include "spaceship.h"
+#include "spaceship.hpp"
 
 Spaceship::Spaceship()
 {
@@ -44,6 +44,6 @@ void Spaceship::fireLaser()
 	if (GetTime() - lastFireTime >= 0.2)
 	{
 		lastFireTime = GetTime();
-		lasers.push_back(Laser(Vector2{position.x + spaceship.width / 2 - 5, position.y - 10}, -10));
+		lasers.push_back(Laser(Vector2{position.x + spaceship.width / 2 - 10, position.y - 10}, -10));
 	}
 }

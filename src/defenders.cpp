@@ -1,10 +1,11 @@
 #include <iostream>
 #include <raylib.h>
-#include "game.h"
+#include "game.hpp"
+
 
 namespace Window
 {
-	const int width = 950;
+	const int width = 1440;
 	const int height = 900;
 }
 
@@ -16,7 +17,7 @@ int main()
 	SetTargetFPS(60);
 
 	Game game;
-
+	
 	while (WindowShouldClose() == false)
 	{
 		game.handleInput();
@@ -27,7 +28,7 @@ int main()
 		ClearBackground(RAYWHITE);
 		DrawTexture(background, 0, 0, WHITE);
 		game.draw();
-
+		
 		EndDrawing();
 	}
 

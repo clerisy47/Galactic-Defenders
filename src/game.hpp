@@ -1,14 +1,18 @@
 #pragma once
-#include"spaceship.h"
+#include"spaceship.hpp"
+#include"obstacles.hpp"
 
 class Game {
 	private:
 		Spaceship player;
+		std::vector<Obstacle> obstacles;
+		std::vector<Obstacle> createObstacles();
+		void deleteInactiveLasers();
 public:
 	Game();
 	~Game();
 	void draw();
 	void update();
 	void handleInput();
-	void deleteInactiveLasers();
+
 };

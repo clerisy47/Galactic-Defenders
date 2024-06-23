@@ -1,7 +1,8 @@
-#include "game.h"
+#include "game.hpp"
 #include<iostream>
 Game::Game()
 {
+	obstacles = createObstacles();
 }
 
 Game::~Game()
@@ -15,6 +16,11 @@ void Game::draw()
 	for (auto &laser : player.lasers)
 	{
 		laser.draw();
+	}
+
+	for (auto& obstacle: obstacles)
+	{
+		obstacle.draw();
 	}
 }
 
@@ -42,6 +48,18 @@ void Game::update()
 		deleteInactiveLasers();
 		std::cout<<"Vector Size: "<<player.lasers.size() <<std::endl;
 	}
+}
+
+std::vector<Obstacle> Game::createObstacles()
+{
+    int obstacleWidth = Obstacle::grid[0].size() * 5;
+    float gap = (GetScreenWidth() - (4 * obstacleWidth))/5;
+
+    for(int i = 0; i < 4; i++) {
+        float offsetX = (i + 1) * gap + i * obstacleWidth;
+        obstacles.push_back(Obstacle({offsetX, float(GetScreenHeight() - 250)}));
+    }
+    return obstacles;
 }
 
 void Game::deleteInactiveLasers()
