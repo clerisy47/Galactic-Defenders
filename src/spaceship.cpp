@@ -41,7 +41,7 @@ void Spaceship::fireLaser()
 	if (GetTime() - lastFireTime >= 0.2)
 	{
 		lastFireTime = GetTime();
-		lasers.push_back(Laser(Vector2{position.x + spaceship.width / 2 - 5, position.y - 10}, -10, "../assets/projectiles/laser1.png"));
+		lasers.push_back(Laser(Vector2{position.x + spaceship.width / 2 - 10, position.y - 10}, -10, "../assets/projectiles/laser1.png")); // laser position adjust ...suyash
 	}
 }
 
@@ -81,6 +81,6 @@ void EnemySpaceship::fireLaser()
 	if (GetTime() - lastFireTime >= 0.5)
 	{
 		lastFireTime = GetTime();
-		lasers.push_back(Laser(Vector2{position.x + spaceship.width / 2 - 10, position.y + 20}, 8, "../assets/projectiles/laser2.png"));
+		lasers.push_back(Laser(Vector2{position.x + spaceship.width / 2 - 18, position.y + 20}, 8, "../assets/projectiles/laser2.png")); // laser position adjust ...suyash
 	}
 }
