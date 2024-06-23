@@ -7,10 +7,12 @@ class Alien
 private:
 public:
     Alien(int type, Vector2 position);
-    void Update();
+    void Update(int direction);
     void Draw();
-    int getType();
-    Texture2D image;
+    int GetType();
+    static void UnloadImages();
+    Rectangle getRectangle();
+    static Texture2D alienImages[3];
     int type;
     Vector2 position;
 };
