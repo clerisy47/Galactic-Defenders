@@ -1,13 +1,25 @@
-#include <aliens.hpp>
-#include <unordered_map>
+#include <iostream>
+#include "aliens.hpp"
+#include <vector>
 #include <string>
+
+Texture2D Alien::alienImages[3] = {};
 
 Alien::Alien(int type, Vector2 position)
 {
     this->type = type;
     this->position = position;
-    std::unordered_map<int, std::string> alienImage = {{1, "assets/aliens/alien_1.png"}, {2, "assets/aliens/alien_2.png"}, {3, "assets/aliens/alien_3.png"}};
-    alienImages[type - 1] = LoadTexture(alienImage[type].c_str());
+    std::vector<std::string> alienImage = {"assets/aliens/alien_1.png", "assets/aliens/alien_2.png", "assets/aliens/alien_3.png"};
+
+    if (type <= 0 || type >= alienImage.size() + 1)
+    {
+        std::cerr << "Invalid alien type: " << type << std::endl;
+        return;
+    }
+
+    Texture2D texture = LoadTexture(alienImage[type - 1].c_str());
+
+    alienImages[type - 1] = texture;
 }
 
 void Alien::Draw()
@@ -22,7 +34,7 @@ int Alien::GetType()
 
 void Alien::UnloadImages()
 {
-    for (int i = 0; i <= 3; i++)
+    for (int i = 0; i <= 2; i++)
     {
         UnloadTexture(alienImages[i]);
     }
