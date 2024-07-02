@@ -9,6 +9,7 @@ class Game {
 		std::vector<Obstacle> obstacles;
 		std::vector<Obstacle> createObstacles();
 		void deleteInactiveLasers();
+		int level = 0;
 public:
 	Game();
 	~Game();
