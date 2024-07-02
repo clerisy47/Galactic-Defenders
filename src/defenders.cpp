@@ -34,17 +34,18 @@ int main()
 
 		switch (current)
 		{
+		// menu active on start - shrine
 		case Window::MENU:
 			ClearBackground(RAYWHITE);
 			DrawTexture(menuBackground, 0, 0, WHITE);
-			DrawText("CLICK ANYWHERE TO START", 500, 500, 20, WHITE);
+			DrawText("CLICK ANYWHERE TO START", 400, Window::height - 100, 50, YELLOW);
 			UpdateMusicStream(music);
 			if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) || IsKeyPressed(KEY_ENTER))
 			{
 				current = Window::GAME; // Transition to GAME state
 			}
 			break;
-
+			// once game state game will run - shrine
 		case Window::GAME:
 			game.handleInput();
 			game.update();
