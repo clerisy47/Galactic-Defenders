@@ -23,6 +23,5 @@ void Laser::move()
 	if (position.y < 0 || position.y >= GetScreenHeight())
 	{
 		active = false;
-		std::cout << "Laser is inactive" << std::endl;
 	}
 }

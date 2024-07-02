@@ -12,6 +12,7 @@ int main()
 {
 
 	InitWindow(Window::width, Window::height, "Galactic Defenders");
+	InitAudioDevice(); // audio - by shrine
 	Texture2D background = LoadTexture("../assets/background/background2.png");
 	SetTargetFPS(60);
 
@@ -27,9 +28,12 @@ int main()
 		ClearBackground(RAYWHITE);
 		DrawTexture(background, 0, 0, WHITE);
 		game.draw();
-		
+
 		EndDrawing();
 	}
+
+	CloseAudioDevice(); // audio closed
+	CloseWindow();		// window closed
 
 	return 0;
 }
