@@ -9,7 +9,7 @@ Alien::Alien(int type, Vector2 position)
 {
     this->type = type;
     this->position = position;
-    std::vector<std::string> alienImage = {"assets/aliens/alien_1.png", "assets/aliens/alien_2.png", "assets/aliens/alien_3.png"};
+    std::vector<std::string> alienImage = {"../assets/aliens/alien_1.png", "../assets/aliens/alien_2.png", "../assets/aliens/alien_3.png"};
 
     if (type <= 0 || type >= alienImage.size() + 1)
     {
