@@ -7,17 +7,21 @@ Game::Game()
 	: player(Vector2{static_cast<float>(GetScreenWidth() / 2), static_cast<float>(GetScreenHeight() - 100)}, 10, "../assets/spaceships/player/tiny_ship13.png", "../assets/sounds/laser.ogg"),
 	  enemy(Vector2{static_cast<float>(GetScreenWidth() / 2), 20}, 5, "../assets/spaceships/enemy/enemyship2.png", "../assets/sounds/enemylaser.ogg")
 {
-	obstacles = createObstacles(); // Other initialization if needed
+	obstacles = createObstacles();
+	alienVector = createAliens();
+	alienDirection = 1;
+	timeLastAlienFired = 0.0;
 }
 
 Game::~Game()
 {
+	Alien::UnloadImages();
 }
 
 void Game::draw()
 {
 	player.draw();
-	enemy.draw();
+	// enemy.draw();
 
 	for (auto &laser : player.lasers)
 	{
@@ -25,13 +29,21 @@ void Game::draw()
 	}
 
 	// Enemy laser drawing - shrine
-	for (auto &laser : enemy.lasers)
-	{
-		laser.draw();
-	}
+	// for (auto &laser : enemy.lasers)
+	// {
+	// 	laser.draw();
+	// }
 	for (auto &obstacle : obstacles)
 	{
 		obstacle.draw();
+	}
+	for (auto &alien : alienVector)
+	{
+		alien.Draw();
+	}
+	for (auto &laser : alienLasers)
+	{
+		laser.draw();
 	}
 }
 
@@ -56,16 +68,22 @@ void Game::update()
 	for (auto &laser : player.lasers)
 	{
 		laser.move();
-		deleteInactiveLasers();
 	}
-
-	// Enemy movement and firing - shrine
-	enemy.move(player.getPosition());
-	enemy.fireLaser();
-	for (auto &laser : enemy.lasers)
+	MoveAliens();
+	AlienShoot();
+	for (auto &laser : alienLasers)
 	{
 		laser.move();
 	}
+	deleteInactiveLasers();
+
+	// Enemy movement and firing - shrine
+	// enemy.move(player.getPosition());
+	// enemy.fireLaser();
+	// for (auto &laser : enemy.lasers)
+	// {
+	// 	laser.move();
+	// }
 }
 
 std::vector<Obstacle> Game::createObstacles()
@@ -81,8 +99,38 @@ std::vector<Obstacle> Game::createObstacles()
 	return obstacles;
 }
 
+std::vector<Alien> Game::createAliens()
+{
+	int row = 5, column = 24, cellSize = 55;
+	std::vector<Alien> alienVector;
+	for (int i = 0; i <= row - 1; i++)
+	{
+		for (int j = 0; j <= column - 1; j++)
+		{
+			int alienType;
+			if (i == 0)
+			{
+				alienType = 3;
+			}
+			else if (i == 1)
+			{
+				alienType = 2;
+			}
+			else
+			{
+				alienType = 1;
+			}
+			float x = 60 + j * cellSize;
+			float y = 120 + i * cellSize;
+			alienVector.push_back(Alien(alienType, {x, y}));
+		}
+	}
+	return alienVector;
+}
+
 void Game::deleteInactiveLasers()
 {
+
 	for (auto it = player.lasers.begin(); it != player.lasers.end();)
 	{
 		if (!it->active)
@@ -93,5 +141,57 @@ void Game::deleteInactiveLasers()
 		{
 			++it;
 		}
+	}
+
+	for (auto it = alienLasers.begin(); it != alienLasers.end();)
+	{
+		if (!it->active)
+		{
+			it = alienLasers.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
+
+void Game::MoveAliens()
+{
+	for (auto &alien : alienVector)
+	{
+		if (alien.position.x + alien.alienImages[alien.type - 1].width > GetScreenWidth() - 25)
+		{
+			alienDirection = -1;
+			MoveDownAliens(4);
+		}
+		if (alien.position.x < 25)
+		{
+			alienDirection = 1;
+			MoveDownAliens(4);
+		}
+
+		alien.Update(alienDirection);
+	}
+}
+
+void Game::MoveDownAliens(int distance)
+{
+	for (auto &alien : alienVector)
+	{
+		alien.position.y += distance;
+	}
+}
+
+void Game::AlienShoot()
+{
+	double currentTime = GetTime();
+	if (currentTime - timeLastAlienFired >= alienShootInterval && !alienVector.empty())
+	{
+		Alien &alien = alienVector[GetRandomValue(0, alienVector.size() - 1)];
+		alienLasers.push_back(Laser({alien.position.x + alien.alienImages[alien.type - 1].width / 2,
+									 alien.position.y + alien.alienImages[alien.type - 1].height},
+									6, "../assets/projectiles/laser1.png"));
+		timeLastAlienFired = GetTime();
 	}
 }
