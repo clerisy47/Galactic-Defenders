@@ -50,7 +50,7 @@ void Spaceship::fireLaser()
 
 Rectangle Spaceship::getRectangle()
 {
-    return {position.x,position.y, float(spaceship.width),float(spaceship.height)};
+	return {position.x, position.y, float(spaceship.width), float(spaceship.height)};
 }
 
 // modifications - shrine
@@ -58,6 +58,13 @@ Rectangle Spaceship::getRectangle()
 Vector2 Spaceship::getPosition()
 {
 	return position;
+}
+
+void Spaceship::Reset()
+{
+	position.x = (GetScreenWidth() - spaceship.width) / 2.0f;
+	position.y = GetScreenHeight() - spaceship.height - 100;
+	lasers.clear();
 }
 
 // enemy spaceship
