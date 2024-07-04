@@ -22,6 +22,8 @@ private:
 	std::vector<Laser> alienLasers;
 	constexpr static float alienShootInterval = 0.35;
 	float timeLastAlienFired;
+	int lives;
+	void GameOver();
 
 public:
 	Game();
@@ -29,4 +31,7 @@ public:
 	void draw();
 	void update();
 	void handleInput();
+	bool run;
+	void Reset();
+    void InitGame();
 };
