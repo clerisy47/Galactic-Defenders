@@ -48,6 +48,11 @@ void Spaceship::fireLaser()
 	}
 }
 
+Rectangle Spaceship::getRectangle()
+{
+    return {position.x,position.y, float(spaceship.width),float(spaceship.height)};
+}
+
 // modifications - shrine
 
 Vector2 Spaceship::getPosition()

@@ -15,6 +15,7 @@ private:
 	void MoveAliens();
 	void MoveDownAliens(int distance);
 	void AlienShoot();
+	void checkForCollisions();
 	int level = 0;
 	int alienDirection;
 	std::vector<Alien> alienVector;

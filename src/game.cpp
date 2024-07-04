@@ -77,6 +77,8 @@ void Game::update()
 	}
 	deleteInactiveLasers();
 
+	checkForCollisions();
+
 	// Enemy movement and firing - shrine
 	// enemy.move(player.getPosition());
 	// enemy.fireLaser();
@@ -194,4 +196,69 @@ void Game::AlienShoot()
 									6, "../assets/projectiles/laser1.png"));
 		timeLastAlienFired = GetTime();
 	}
+}
+
+void Game::checkForCollisions()
+{
+	//Spaceship Lsers
+	for(auto& laser: player.lasers){
+
+		auto it = alienVector.begin();
+		while (it != alienVector.end())
+		{
+			if(CheckCollisionRecs(it-> getRectangle(),laser.getRectangle())){
+				it = alienVector.erase(it);
+				laser.active = false;
+			}
+			else{
+				++it;
+			}
+		}
+		for(auto& obstacle: obstacles)
+		{
+			auto it = obstacle.blocks.begin();
+
+		
+		while (it != obstacle.blocks.end())
+		{
+			if(CheckCollisionRecs(it-> getRectangle(),laser.getRectangle())){
+				it = obstacle.blocks.erase(it);
+				laser.active = false;
+			}
+			else{
+				++it;
+			}
+		}
+		}
+		
+	}
+	//Alien lasers
+	for(auto& laser: alienLasers){
+	
+		if(CheckCollisionRecs(laser.getRectangle(), player.getRectangle())){
+			
+			laser.active = false;
+			
+		}
+
+
+		for(auto& obstacle: obstacles)
+		{
+			auto it = obstacle.blocks.begin();
+
+		
+		while (it != obstacle.blocks.end())
+		{
+			if(CheckCollisionRecs(it-> getRectangle(),laser.getRectangle())){
+				it = obstacle.blocks.erase(it);
+				laser.active = false;
+			}
+			else{
+				++it;
+			}
+		}
+		}
+		
+	}
+
 }

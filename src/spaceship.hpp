@@ -22,6 +22,7 @@ public:
 	void moveLeft();
 	void moveRight();
 	void fireLaser();
+	Rectangle getRectangle();
 	Vector2 getPosition();
 	std::vector<Laser> lasers;
 };
