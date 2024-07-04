@@ -11,6 +11,8 @@ Game::Game()
 	alienVector = createAliens();
 	alienDirection = 1;
 	timeLastAlienFired = 0.0;
+	lives = 3;
+	run = true;
 }
 
 Game::~Game()
@@ -49,6 +51,16 @@ void Game::draw()
 
 void Game::handleInput()
 {
+	if (!run)
+	{
+		if (IsKeyDown(KEY_ENTER))
+		{
+			Reset();
+			InitGame();
+		}
+
+		return;
+	}
 	if (IsKeyDown(KEY_LEFT))
 	{
 		player.moveLeft();
@@ -65,6 +77,10 @@ void Game::handleInput()
 
 void Game::update()
 {
+	if (!run)
+	{
+		return;
+	}
 	for (auto &laser : player.lasers)
 	{
 		laser.move();
@@ -200,65 +216,102 @@ void Game::AlienShoot()
 
 void Game::checkForCollisions()
 {
-	//Spaceship Lsers
-	for(auto& laser: player.lasers){
+	// Spaceship Lsers
+	for (auto &laser : player.lasers)
+	{
 
 		auto it = alienVector.begin();
 		while (it != alienVector.end())
 		{
-			if(CheckCollisionRecs(it-> getRectangle(),laser.getRectangle())){
+			if (CheckCollisionRecs(it->getRectangle(), laser.getRectangle()))
+			{
 				it = alienVector.erase(it);
 				laser.active = false;
 			}
-			else{
+			else
+			{
 				++it;
 			}
 		}
-		for(auto& obstacle: obstacles)
+		for (auto &obstacle : obstacles)
 		{
 			auto it = obstacle.blocks.begin();
 
-		
-		while (it != obstacle.blocks.end())
-		{
-			if(CheckCollisionRecs(it-> getRectangle(),laser.getRectangle())){
-				it = obstacle.blocks.erase(it);
-				laser.active = false;
-			}
-			else{
-				++it;
+			while (it != obstacle.blocks.end())
+			{
+				if (CheckCollisionRecs(it->getRectangle(), laser.getRectangle()))
+				{
+					it = obstacle.blocks.erase(it);
+					laser.active = false;
+				}
+				else
+				{
+					++it;
+				}
 			}
 		}
-		}
-		
 	}
-	//Alien lasers
-	for(auto& laser: alienLasers){
-	
-		if(CheckCollisionRecs(laser.getRectangle(), player.getRectangle())){
-			
+	// Alien lasers
+	for (auto &laser : alienLasers)
+	{
+
+		if (CheckCollisionRecs(laser.getRectangle(), player.getRectangle()))
+		{
+
 			laser.active = false;
-			
+			lives--;
+			if (lives == 0)
+			{
+				GameOver();
+			}
 		}
 
-
-		for(auto& obstacle: obstacles)
+		for (auto &obstacle : obstacles)
 		{
 			auto it = obstacle.blocks.begin();
 
-		
-		while (it != obstacle.blocks.end())
-		{
-			if(CheckCollisionRecs(it-> getRectangle(),laser.getRectangle())){
-				it = obstacle.blocks.erase(it);
-				laser.active = false;
-			}
-			else{
-				++it;
+			while (it != obstacle.blocks.end())
+			{
+				if (CheckCollisionRecs(it->getRectangle(), laser.getRectangle()))
+				{
+					it = obstacle.blocks.erase(it);
+					laser.active = false;
+				}
+				else
+				{
+					++it;
+				}
 			}
 		}
-		}
-		
 	}
+	for (auto &alien : alienVector)
+	{
+		if (CheckCollisionRecs(alien.getRectangle(), player.getRectangle()))
+		{
+			GameOver();
+		}
+	}
+}
 
+void Game::GameOver()
+{
+	run = false;
+}
+
+void Game::Reset()
+{
+	player.Reset();
+	alienVector.clear();
+	alienLasers.clear();
+	obstacles.clear();
+}
+
+void Game::InitGame()
+{
+	obstacles = createObstacles();
+	alienVector = createAliens();
+	alienDirection = 1;
+	timeLastAlienFired = 0.0;
+	lives = 3;
+	run = true;
 }
