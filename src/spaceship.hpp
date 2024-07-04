@@ -24,6 +24,7 @@ public:
 	void fireLaser();
 	Rectangle getRectangle();
 	Vector2 getPosition();
+	void Reset();
 	std::vector<Laser> lasers;
 };
 
