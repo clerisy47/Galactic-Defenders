@@ -13,5 +13,6 @@ public:
 	void draw();
 	void move();
 	bool active;
+	Rectangle getRectangle();
 
 };

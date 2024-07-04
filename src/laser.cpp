@@ -25,3 +25,13 @@ void Laser::move()
 		active = false;
 	}
 }
+
+Rectangle Laser::getRectangle()
+{
+    Rectangle rect;
+    rect.x = position.x;
+    rect.y = position.y;
+    rect.width = image.width;
+    rect.height = image.height;
+    return rect;
+}
