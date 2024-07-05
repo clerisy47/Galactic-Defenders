@@ -40,7 +40,7 @@ void Alien::UnloadImages()
     }
 }
 
-Rectangle Alien::getRectangle()
+Rectangle Alien::GetRectangle()
 {
     return {position.x, position.y, static_cast<float>(alienImages[type - 1].width), static_cast<float>(alienImages[type - 1].height)};
 }
