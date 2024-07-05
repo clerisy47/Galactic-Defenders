@@ -38,10 +38,10 @@ Obstacle::Obstacle(Vector2 position)
     }
 }
 
-void Obstacle::draw()
+void Obstacle::Draw()
 {
     for(auto& block: blocks)
     {
-        block.draw();
+        block.Draw();
     }
 }
