@@ -9,7 +9,7 @@ Laser::Laser(Vector2 position, int speed, const char *path)
 	active = true;
 }
 
-void Laser::draw()
+void Laser::Draw()
 {
 	if (active)
 	{
@@ -17,7 +17,7 @@ void Laser::draw()
 	}
 }
 
-void Laser::move()
+void Laser::Move()
 {
 	position.y += speed;
 	if (position.y < 0 || position.y >= GetScreenHeight())
@@ -26,7 +26,7 @@ void Laser::move()
 	}
 }
 
-Rectangle Laser::getRectangle()
+Rectangle Laser::GetRectangle()
 {
     Rectangle rect;
     rect.x = position.x;
