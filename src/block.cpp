@@ -5,10 +5,10 @@ Block::Block(Vector2 position)
  this->position = position;
 }
 
-void Block::draw(){
+void Block::Draw(){
   DrawRectangle(position.x,position.y, 5,5 ,{243,216,63,255});
 }
-Rectangle Block::getRectangle()
+Rectangle Block::GetRectangle()
 {
     Rectangle rect;
     rect.x = position.x;
