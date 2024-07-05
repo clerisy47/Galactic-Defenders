@@ -47,12 +47,12 @@ int main()
 			break;
 			// once game state game will run - shrine
 		case Window::GAME:
-			game.handleInput();
-			game.update();
+			game.HandleInput();
+			game.Update();
 
 			ClearBackground(RAYWHITE);
 			DrawTexture(gameBackground, 0, 0, WHITE);
-			game.draw();
+			game.Draw();
 
 			// Check for return to MENU input
 			if (IsKeyPressed(KEY_ESCAPE))
