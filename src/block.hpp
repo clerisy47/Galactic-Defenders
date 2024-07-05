@@ -6,6 +6,6 @@ class Block{
         Vector2 position;
     public:
         Block(Vector2 position);
-        void draw();
-        Rectangle getRectangle();
+        void Draw();
+        Rectangle GetRectangle();
 };
