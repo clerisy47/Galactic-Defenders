@@ -13,24 +13,24 @@ Spaceship::~Spaceship()
 	UnloadSound(laserSound);
 }
 
-void Spaceship::draw()
+void Spaceship::Draw()
 {
 	DrawTextureV(spaceship, position, WHITE);
 }
 
-void Spaceship::moveLeft()
+void Spaceship::MoveLeft()
 {
 	position.x -= speed;
-	limitMovement();
+	LimitMovement();
 }
 
-void Spaceship::moveRight()
+void Spaceship::MoveRight()
 {
 	position.x += speed;
-	limitMovement();
+	LimitMovement();
 }
 
-void Spaceship::limitMovement()
+void Spaceship::LimitMovement()
 {
 	if (position.x <= 10)
 		position.x = 10;
@@ -38,7 +38,7 @@ void Spaceship::limitMovement()
 		position.x = GetScreenWidth() - spaceship.width - 10;
 }
 
-void Spaceship::fireLaser()
+void Spaceship::FireLaser()
 {
 	if (GetTime() - lastFireTime >= 0.35)
 	{
@@ -48,14 +48,14 @@ void Spaceship::fireLaser()
 	}
 }
 
-Rectangle Spaceship::getRectangle()
+Rectangle Spaceship::GetRectangle()
 {
 	return {position.x, position.y, float(spaceship.width), float(spaceship.height)};
 }
 
 // modifications - shrine
 
-Vector2 Spaceship::getPosition()
+Vector2 Spaceship::GetPosition()
 {
 	return position;
 }
@@ -79,7 +79,7 @@ EnemySpaceship::~EnemySpaceship()
 	UnloadTexture(spaceship);
 }
 
-void EnemySpaceship::move(const Vector2 &playerPostion)
+void EnemySpaceship::Move(const Vector2 &playerPostion)
 {
 	if (position.x > playerPostion.x)
 	{
@@ -91,7 +91,7 @@ void EnemySpaceship::move(const Vector2 &playerPostion)
 	}
 }
 
-void EnemySpaceship::fireLaser()
+void EnemySpaceship::FireLaser()
 {
 	if (GetTime() - lastFireTime >= 1)
 	{
