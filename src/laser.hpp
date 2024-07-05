@@ -10,9 +10,9 @@ private:
 	
 public:
 	Laser(Vector2 position, int speed, const char* path);
-	void draw();
-	void move();
+	void Draw();
+	void Move();
 	bool active;
-	Rectangle getRectangle();
+	Rectangle GetRectangle();
 
 };
