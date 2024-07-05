@@ -9,18 +9,18 @@ private:
 	Spaceship player;
 	EnemySpaceship enemy;
 	std::vector<Obstacle> obstacles;
-	std::vector<Obstacle> createObstacles();
-	std::vector<Alien> createAliens();
-	void deleteInactiveLasers();
+	std::vector<Obstacle> CreateObstacles();
+	std::vector<Alien> CreateAliens();
+	void DeleteInactiveLasers();
 	void MoveAliens();
 	void MoveDownAliens(int distance);
 	void AlienShoot();
-	void checkForCollisions();
+	void CheckForCollisions();
 	int level = 0;
 	int alienDirection;
 	std::vector<Alien> alienVector;
 	std::vector<Laser> alienLasers;
-	constexpr static float alienShootInterval = 0.35;
+	constexpr static float AlienShootInterval = 0.35;
 	float timeLastAlienFired;
 	int lives;
 	void GameOver();
@@ -28,10 +28,10 @@ private:
 public:
 	Game();
 	~Game();
-	void draw();
-	void update();
-	void handleInput();
+	void Draw();
+	void Update();
+	void HandleInput();
 	bool run;
 	void Reset();
-    void InitGame();
+    void Init();
 };
