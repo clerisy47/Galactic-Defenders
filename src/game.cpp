@@ -204,7 +204,7 @@ void Game::AlienShoot()
 		Alien &alien = alienVector[GetRandomValue(0, alienVector.size() - 1)];
 		alienLasers.push_back(Laser({alien.position.x + alien.alienImages[alien.type - 1].width / 2,
 									 alien.position.y + alien.alienImages[alien.type - 1].height},
-									6, "../assets/projectiles/laser1.png"));
+									6, "../assets/projectiles/laser3.png")); // alien laser changed - shrine
 		timeLastAlienFired = GetTime();
 	}
 }
