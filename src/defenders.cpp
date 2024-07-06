@@ -28,6 +28,7 @@ int main()
 		case Window::MENU:
 			menu.Update(); // broken down menu into menu.hpp and menu.cpp - shrine
 			menu.Draw();
+			UpdateMusicStream(music);
 			break;
 			// once game state game will run - shrine
 		case Window::GAME:

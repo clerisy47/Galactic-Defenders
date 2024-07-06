@@ -2,8 +2,10 @@
 #include "globals.hpp"
 
 Menu::Menu(Texture2D bg)
+    : background(bg),
+      startButton("../assets/buttons/start.png", {static_cast<float>(Window::width / 4 - 100), static_cast<float>(Window::height / 2 - 100)}),
+      exitButton("../assets/buttons/quit.png", {static_cast<float>(2 * Window::width / 4 - 100), static_cast<float>(Window::height / 2 - 100)})
 {
-    background = bg;
 }
 
 Menu::~Menu()
@@ -13,10 +15,13 @@ Menu::~Menu()
 
 void Menu::Update()
 {
-    if (CheckScreenPressed())
+    if (startButton.IsClicked())
     {
-        // Transition to GAME state
         Window::current = Window::GAME;
+    }
+    else if (exitButton.IsClicked())
+    {
+        CloseWindow();
     }
 }
 
@@ -24,10 +29,6 @@ void Menu::Draw()
 {
     ClearBackground(RAYWHITE);
     DrawTexture(background, 0, 0, WHITE);
-    DrawText("CLICK ANYWHERE TO START", 400, Window::height - 100, 50, YELLOW);
-}
-
-bool Menu::CheckScreenPressed()
-{
-    return IsMouseButtonDown(MOUSE_LEFT_BUTTON) || IsKeyPressed(KEY_ENTER);
+    startButton.Draw();
+    exitButton.Draw();
 }
