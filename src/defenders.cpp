@@ -1,14 +1,16 @@
 #include <iostream>
 #include <raylib.h>
-#include "game.hpp" // added global vars to globals - shrine
+#include "game.hpp"
 #include "globals.hpp"
 #include "menu.hpp"
+#include <iostream>
 
 int main()
 {
 	InitWindow(Window::width, Window::height, "Galactic Defenders");
 	InitAudioDevice(); // Initialize audio device
 	SetTargetFPS(60);
+	SetExitKey(0); // so esc key doesn't close the window but returns to menu
 
 	Menu menu(LoadTexture("../assets/background/background1.png"));
 	Texture2D gameBackground = LoadTexture("../assets/background/background2.png");
@@ -16,7 +18,7 @@ int main()
 	Music music = LoadMusicStream("../assets/sounds/background.ogg");
 	PlayMusicStream(music); // Start playing the music
 
-	Game game;
+	Game *game = nullptr; // Declare a pointer to the Game object - shrine
 
 	while (!WindowShouldClose())
 	{
@@ -24,20 +26,34 @@ int main()
 
 		switch (Window::current)
 		{
-		// menu active on start - shrine
+		// menu active on start
 		case Window::MENU:
-			menu.Update(); // broken down menu into menu.hpp and menu.cpp - shrine
+			menu.Update();
 			menu.Draw();
 			UpdateMusicStream(music);
+
+			// If we are switching from GAME to MENU, delete the game object
+			if (game != nullptr)
+			{
+				delete game;
+				game = nullptr;
+				std::cout << "Game object deleted" << std::endl;
+			}
 			break;
-			// once game state game will run - shrine
+
 		case Window::GAME:
-			game.HandleInput();
-			game.Update();
+			// If we are switching to GAME from MENU, create the game object
+			if (game == nullptr)
+			{
+				game = new Game();
+			}
+
+			game->HandleInput();
+			game->Update();
 
 			ClearBackground(RAYWHITE);
 			DrawTexture(gameBackground, 0, 0, WHITE);
-			game.Draw();
+			game->Draw();
 
 			// Check for return to MENU input
 			if (IsKeyPressed(KEY_ESCAPE))
@@ -55,6 +71,12 @@ int main()
 	UnloadMusicStream(music); // Unload music stream
 	CloseAudioDevice();		  // Close audio device
 	CloseWindow();			  // Close window
+
+	// If the game object still exists, delete it
+	if (game != nullptr)
+	{
+		delete game;
+	}
 
 	return 0;
 }
