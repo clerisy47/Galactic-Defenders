@@ -1,26 +1,16 @@
 #include <iostream>
 #include <raylib.h>
-#include "game.hpp"
-
-namespace Window
-{
-	const int width = 1440;
-	const int height = 900;
-	enum Screen
-	{
-		MENU,
-		GAME
-	};
-}
+#include "game.hpp" // added global vars to globals - shrine
+#include "globals.hpp"
+#include "menu.hpp"
 
 int main()
 {
 	InitWindow(Window::width, Window::height, "Galactic Defenders");
 	InitAudioDevice(); // Initialize audio device
 	SetTargetFPS(60);
-	Window::Screen current = Window::MENU;
 
-	Texture2D menuBackground = LoadTexture("../assets/background/background1.png");
+	Menu menu(LoadTexture("../assets/background/background1.png"));
 	Texture2D gameBackground = LoadTexture("../assets/background/background2.png");
 
 	Music music = LoadMusicStream("../assets/sounds/background.ogg");
@@ -32,18 +22,12 @@ int main()
 	{
 		BeginDrawing();
 
-		switch (current)
+		switch (Window::current)
 		{
 		// menu active on start - shrine
 		case Window::MENU:
-			ClearBackground(RAYWHITE);
-			DrawTexture(menuBackground, 0, 0, WHITE);
-			DrawText("CLICK ANYWHERE TO START", 400, Window::height - 100, 50, YELLOW);
-			UpdateMusicStream(music);
-			if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) || IsKeyPressed(KEY_ENTER))
-			{
-				current = Window::GAME; // Transition to GAME state
-			}
+			menu.Update(); // broken down menu into menu.hpp and menu.cpp - shrine
+			menu.Draw();
 			break;
 			// once game state game will run - shrine
 		case Window::GAME:
@@ -57,8 +41,8 @@ int main()
 			// Check for return to MENU input
 			if (IsKeyPressed(KEY_ESCAPE))
 			{
-				current = Window::MENU; // Transition back to MENU state
-				PlayMusicStream(music); // Restart music when returning to menu
+				Window::current = Window::MENU; // Transition back to MENU state
+				PlayMusicStream(music);			// Restart music when returning to menu
 			}
 			break;
 		}
