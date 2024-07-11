@@ -2,7 +2,8 @@
 
 namespace Window
 {
-    const int width = 1440;
-    const int height = 900;
+    const float offset = 50;
+    const float width = 1440;
+    const float height = 900;
     Screen current = MENU;
 }
