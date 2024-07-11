@@ -11,12 +11,21 @@ int main()
 	InitAudioDevice(); // Initialize audio device
 	SetTargetFPS(60);
 	SetExitKey(0); // so esc key doesn't close the window but returns to menu
+	// Color yellow = {243, 216, 63, 255};
+	Font font = LoadFontEx("fonts/gamefont.ttf", 64, 0, 0);
 
 	Menu menu(LoadTexture("../assets/background/background1.png"));
 	Texture2D gameBackground = LoadTexture("../assets/background/background2.png");
 
 	Music music = LoadMusicStream("../assets/sounds/background.ogg");
 	PlayMusicStream(music); // Start playing the music
+
+	Texture2D level1Image = LoadTexture("../assets/buttons/level1.png");
+	Texture2D level2Image = LoadTexture("../assets/buttons/level2.png");
+	Texture2D level3Image = LoadTexture("../assets/buttons/level3.png");
+	Texture2D gameOverImage = LoadTexture("../assets/buttons/you_lose.png");
+
+	Texture2D livesImage = LoadTexture("../assets/buttons/hp.png");
 
 	Game *game = nullptr; // Declare a pointer to the Game object - shrine
 
@@ -53,6 +62,19 @@ int main()
 
 			ClearBackground(RAYWHITE);
 			DrawTexture(gameBackground, 0, 0, WHITE);
+			if (game->run)
+			{
+				DrawTexture(level1Image, 50 + 50, 50, WHITE);
+			}
+			else
+			{
+				DrawTexture(gameOverImage, 400, 50, WHITE);
+			}
+			for (int i = 0; i <= game->lives - 1; i++)
+			{
+				DrawTexture(livesImage, (i + 1) * 70 + 400, 50, WHITE);
+			}
+
 			game->Draw();
 
 			// Check for return to MENU input
