@@ -2,12 +2,13 @@
 
 namespace Window
 {
-	extern const int width ;
-	extern const int height;
+	extern const float offset;
+	extern const float width;
+	extern const float height;
 	enum Screen
 	{
 		MENU,
 		GAME
 	};
-    extern Screen current;
+	extern Screen current;
 }
