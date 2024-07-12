@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include <iostream>
+#include <fstream>
 
 // added player via constructor - shrine
 // note - speed of player must be some multiple of enemy i.e 5*2 = 10 pixel reasons.
@@ -222,6 +223,19 @@ void Game::CheckForCollisions()
 			{
 				it = alienVector.erase(it);
 				laser.active = false;
+				if (it->type == 1)
+				{
+					score += 100;
+				}
+				else if (it->type == 2)
+				{
+					score += 200;
+				}
+				else if (it->type == 3)
+				{
+					score += 300;
+				}
+				checkHighScore();
 			}
 			else
 			{
@@ -293,6 +307,45 @@ void Game::GameOver()
 	run = false;
 }
 
+void Game::checkHighScore()
+{
+	if (score > highScore)
+	{
+		highScore = score;
+		saveHighScore(highScore);
+	}
+}
+
+void Game::saveHighScore(int highScore)
+{
+	std::ofstream highScoreFile("../data/high_score.txt");
+	if (highScoreFile.is_open())
+	{
+		highScoreFile << highScore;
+		highScoreFile.close();
+	}
+	else
+	{
+		std::cerr << "Failed to save High Score." << std::endl;
+	}
+}
+
+int Game::loadHighScore()
+{
+	int loadedHighscore = 0;
+	std::ifstream highScoreFile("../data/high_score.txt");
+	if (highScoreFile.is_open())
+	{
+		highScoreFile >> loadedHighscore;
+		highScoreFile.close();
+	}
+	else
+	{
+		std::cerr << "Failed to load High Score." << std::endl;
+	}
+	return loadedHighscore;
+}
+
 void Game::Reset()
 {
 	player.Reset();
@@ -308,5 +361,7 @@ void Game::Init()
 	alienDirection = 1;
 	timeLastAlienFired = 0.0;
 	lives = 3;
+	score = 0;
+	highScore = loadHighScore();
 	run = true;
 }

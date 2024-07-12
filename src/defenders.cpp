@@ -4,6 +4,15 @@
 #include "globals.hpp"
 #include "menu.hpp"
 #include <iostream>
+#include <string.h>
+
+std::string FormatWithLeadingZeros(int number, int width)
+{
+	std::string numberText = std::to_string(number);
+	int leadingZeros = width - numberText.length();
+	numberText = std::string(leadingZeros, '0') + numberText;
+	return numberText;
+}
 
 int main()
 {
@@ -11,7 +20,7 @@ int main()
 	InitAudioDevice(); // Initialize audio device
 	SetTargetFPS(60);
 	SetExitKey(0); // so esc key doesn't close the window but returns to menu
-	// Color yellow = {243, 216, 63, 255};
+	Color yellow = {243, 216, 63, 255};
 	Font font = LoadFont("../assets/fonts/gamefont.ttf");
 
 	Menu menu(LoadTexture("../assets/background/background1.png"));
@@ -74,7 +83,7 @@ int main()
 			{
 				game->Reset();
 				DrawTextEx(font, "GAME OVER", {static_cast<float>(Window::width / 2) - 400, 150}, 200, 5, WHITE);
-				DrawTextEx(font, "Press ESC to return to MENU.", {static_cast<float>(Window::width / 2) - 350, 400}, 50, 2, WHITE);
+				DrawTextEx(font, "Press ESC to return to MENU.", {static_cast<float>(Window::width / 2) - 350, 400}, 50, 2, yellow);
 
 				if (!gameOverSoundPlayed)
 				{
@@ -85,9 +94,16 @@ int main()
 			}
 
 			for (int i = 0; i <= game->lives - 1; i++)
-			{
+
 				DrawTexture(livesImage, (i + 1) * 70 + Window::width - 300, 30, WHITE);
 			}
+			DrawTextEx(font, "Score: ", {650, 15}, 34, 2, yellow);
+			std::string scoreText = FormatWithLeadingZeros(game->score, 5);
+			DrawTextEx(font, scoreText.c_str(), {760, 15}, 34, 2, yellow);
+
+			DrawTextEx(font, "High Score: ", {1000, 15}, 34, 2, yellow);
+			std::string highScoreText = FormatWithLeadingZeros(game->highScore, 5);
+			DrawTextEx(font, highScoreText.c_str(), {1190, 15}, 34, 2, yellow);
 
 			game->Draw();
 
