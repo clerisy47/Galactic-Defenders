@@ -23,6 +23,9 @@ private:
 	constexpr static float AlienShootInterval = 0.35;
 	float timeLastAlienFired;
 	void GameOver();
+	void checkHighScore();
+	void saveHighScore(int highScore);
+	int loadHighScore();
 
 public:
 	Game();
@@ -34,4 +37,6 @@ public:
 	void Reset();
 	void Init();
 	int lives;
+	int score;
+	int highScore;
 };
