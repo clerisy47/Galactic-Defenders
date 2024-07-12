@@ -4,15 +4,6 @@
 #include "globals.hpp"
 #include "menu.hpp"
 #include <iostream>
-#include <string.h>
-
-std::string FormatWithLeadingZeros(int number, int width)
-{
-	std::string numberText = std::to_string(number);
-	int leadingZeros = width - numberText.length();
-	numberText = std::string(leadingZeros, '0') + numberText;
-	return numberText;
-}
 
 int main()
 {
@@ -94,16 +85,9 @@ int main()
 			}
 
 			for (int i = 0; i <= game->lives - 1; i++)
-
+			{
 				DrawTexture(livesImage, (i + 1) * 70 + Window::width - 300, 30, WHITE);
 			}
-			DrawTextEx(font, "Score: ", {650, 15}, 34, 2, yellow);
-			std::string scoreText = FormatWithLeadingZeros(game->score, 5);
-			DrawTextEx(font, scoreText.c_str(), {760, 15}, 34, 2, yellow);
-
-			DrawTextEx(font, "High Score: ", {1000, 15}, 34, 2, yellow);
-			std::string highScoreText = FormatWithLeadingZeros(game->highScore, 5);
-			DrawTextEx(font, highScoreText.c_str(), {1190, 15}, 34, 2, yellow);
 
 			game->Draw();
 
