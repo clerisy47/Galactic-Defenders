@@ -9,11 +9,13 @@ Game::Game()
 	  enemy(Vector2{static_cast<float>(GetScreenWidth() / 2), 20}, 5, "../assets/spaceships/enemy/enemyship2.png", "../assets/sounds/enemylaser.ogg")
 {
 	Init();
+	laserSpaceshipCollisionSound = LoadSound("../assets/sounds/explosion.ogg");
 }
 
 Game::~Game()
 {
 	Alien::UnloadImages();
+	UnloadSound(laserSpaceshipCollisionSound);
 }
 
 void Game::Draw()
@@ -269,6 +271,7 @@ void Game::CheckForCollisions()
 
 			laser.active = false;
 			lives--;
+			PlaySound(laserSpaceshipCollisionSound);
 			if (lives == 0)
 			{
 				GameOver();
