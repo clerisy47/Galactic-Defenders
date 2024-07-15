@@ -6,9 +6,9 @@
 // note - speed of player must be some multiple of enemy i.e 5*2 = 10 pixel reasons.
 Game::Game()
 	: player(Vector2{static_cast<float>(GetScreenWidth() / 2), static_cast<float>(GetScreenHeight() - 100)}, 10, "../assets/spaceships/player/tiny_ship13.png", "../assets/sounds/laser.ogg"),
-	  enemy(Vector2{static_cast<float>(GetScreenWidth() / 2), 20}, 5, "../assets/spaceships/enemy/enemyship2.png", "../assets/sounds/enemylaser.ogg")
+	  enemy(Vector2{static_cast<float>(GetScreenWidth() / 2), 200}, 5, "../assets/spaceships/enemy/enemyship2.png", "../assets/sounds/enemylaser.ogg")
 {
-	Init();
+	InitLevelOne();
 	laserSpaceshipCollisionSound = LoadSound("../assets/sounds/explosion.ogg");
 }
 
@@ -22,17 +22,24 @@ void Game::Draw()
 {
 	player.Draw();
 	// enemy.Draw();
+	if (level == 2)
+	{
+		enemy.Draw();
+	}
 
 	for (auto &laser : player.lasers)
 	{
 		laser.Draw();
 	}
 
-	// Enemy laser drawing - shrine
-	// for (auto &laser : enemy.lasers)
-	// {
-	// 	laser.Draw();
-	// }
+	if (level == 2)
+	{
+		for (auto &laser : enemy.lasers)
+		{
+			laser.Draw();
+		}
+	}
+
 	for (auto &obstacle : obstacles)
 	{
 		obstacle.Draw();
@@ -54,7 +61,7 @@ void Game::HandleInput()
 		if (IsKeyDown(KEY_ENTER))
 		{
 			Reset();
-			Init();
+			InitLevelOne();
 		}
 
 		return;
@@ -93,13 +100,21 @@ void Game::Update()
 
 	CheckForCollisions();
 
+	if (alienVector.empty() && level == 1)
+	{
+		TransitionLevelTwo();
+	}
+
 	// Enemy movement and firing - shrine
-	// enemy.Move(player.GetPosition());
-	// enemy.FireLaser();
-	// for (auto &laser : enemy.lasers)
-	// {
-	// 	laser.Move();
-	// }
+	if (level == 2)
+	{
+		enemy.Move(player.GetPosition());
+		enemy.FireLaser();
+		for (auto &laser : enemy.lasers)
+		{
+			laser.Move();
+		}
+	}
 }
 
 std::vector<Obstacle> Game::CreateObstacles()
@@ -357,7 +372,7 @@ void Game::Reset()
 	obstacles.clear();
 }
 
-void Game::Init()
+void Game::InitLevelOne()
 {
 	obstacles = CreateObstacles();
 	alienVector = CreateAliens();
@@ -367,4 +382,10 @@ void Game::Init()
 	score = 0;
 	highScore = loadHighScore();
 	run = true;
+	level = 1;
+}
+
+void Game::TransitionLevelTwo()
+{
+	level++;
 }
