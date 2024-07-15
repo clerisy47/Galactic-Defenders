@@ -8,8 +8,8 @@
 std::string FormatWithLeadingZeros(int number, int width)
 {
 	std::string numberText = std::to_string(number);
-	int leadingZeros = width - numberText.length();
-	return numberText = std::string(leadingZeros, '0') + numberText;
+	int leadingZeroes = width - numberText.size();
+	return numberText = std::string(leadingZeroes, '0') + numberText;
 }
 
 int main()
