@@ -38,5 +38,5 @@ public:
 	void Init();
 	int lives;
 	int score;
-	int highScore;
+	int highScore;	
 };
