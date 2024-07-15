@@ -24,9 +24,11 @@ int main()
 	Menu menu(LoadTexture("../assets/background/background1.png"));
 	Texture2D gameBackground = LoadTexture("../assets/background/background2.png");
 
-	Music music = LoadMusicStream("../assets/sounds/background.ogg");
+	Music musicMenu = LoadMusicStream("../assets/sounds/backgroundmenu.ogg");
+	Music musicGame = LoadMusicStream("../assets/sounds/backgroundgame.ogg");
 	Sound gameOverSound = LoadSound("../assets/sounds/youlose.ogg");
-	PlayMusicStream(music); // Start playing the music
+
+	PlayMusicStream(musicMenu); // Start playing the music
 
 	Texture2D level1Image = LoadTexture("../assets/buttons/level1.png");
 	Texture2D level2Image = LoadTexture("../assets/buttons/level2.png");
@@ -47,7 +49,7 @@ int main()
 		case Window::MENU:
 			menu.Update();
 			menu.Draw();
-			UpdateMusicStream(music);
+			UpdateMusicStream(musicMenu);
 
 			// If we are switching from GAME to MENU, delete the game object
 			if (game != nullptr)
@@ -66,8 +68,14 @@ int main()
 			{
 				game = new Game();
 				gameOverSound = LoadSound("../assets/sounds/youlose.ogg");
+
+				// Transition from menu to game music
+				StopMusicStream(musicMenu);
+				SetMusicVolume(musicGame, 0.2f);
+				PlayMusicStream(musicGame);
 			}
 
+			UpdateMusicStream(musicGame);
 			game->HandleInput();
 			game->Update();
 
@@ -113,7 +121,9 @@ int main()
 				{
 					UnloadSound(gameOverSound);
 				}
-				PlayMusicStream(music); // Restart music when returning to menu
+				// Transition from game to menu music
+				StopMusicStream(musicGame);
+				PlayMusicStream(musicMenu);
 			}
 			break;
 		}
@@ -122,7 +132,8 @@ int main()
 	}
 
 	// Cleanup
-	UnloadMusicStream(music); // Unload music stream
+	UnloadMusicStream(musicMenu); // Unload music stream
+	UnloadMusicStream(musicGame); // Unload game music stream
 	UnloadSound(gameOverSound);
 	CloseAudioDevice(); // Close audio device
 	CloseWindow();		// Close window

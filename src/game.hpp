@@ -26,6 +26,7 @@ private:
 	void checkHighScore();
 	void saveHighScore(int highScore);
 	int loadHighScore();
+	Sound laserSpaceshipCollisionSound;
 
 public:
 	Game();
