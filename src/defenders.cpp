@@ -5,6 +5,13 @@
 #include "menu.hpp"
 #include <iostream>
 
+std::string FormatWithLeadingZeros(int number, int width)
+{
+	std::string numberText = std::to_string(number);
+	int leadingZeros = width - numberText.length();
+	return numberText = std::string(leadingZeros, '0') + numberText;
+}
+
 int main()
 {
 	InitWindow(Window::width, Window::height, "Galactic Defenders");
@@ -88,6 +95,13 @@ int main()
 			{
 				DrawTexture(livesImage, (i + 1) * 70 + Window::width - 300, 30, WHITE);
 			}
+			DrawTextEx(font, "SCORE: ", {330, 30}, 34, 2, yellow);
+			std::string scoreText = FormatWithLeadingZeros(game->score, 5);
+			DrawTextEx(font, scoreText.c_str(), {450, 30}, 34, 2, yellow);
+
+			DrawTextEx(font, "HIGH SCORE: ", {770, 30}, 34, 2, yellow);
+			std::string highScoreText = FormatWithLeadingZeros(game->highScore, 5);
+			DrawTextEx(font, highScoreText.c_str(), {970, 30}, 34, 2, yellow);
 
 			game->Draw();
 
