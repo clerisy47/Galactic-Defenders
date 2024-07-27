@@ -36,7 +36,8 @@ public:
 	void HandleInput();
 	bool run;
 	void Reset();
-	void Init();
+	void InitLevelOne();
+	void TransitionLevelTwo();
 	int lives;
 	int score;
 	int highScore;	
