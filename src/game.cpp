@@ -6,7 +6,7 @@
 // note - speed of player must be some multiple of enemy i.e 5*2 = 10 pixel reasons.
 Game::Game()
 	: player(Vector2{static_cast<float>(GetScreenWidth() / 2), static_cast<float>(GetScreenHeight() - 100)}, 10, "../assets/spaceships/player/tiny_ship13.png", "../assets/sounds/laser.ogg"),
-	  enemy(Vector2{static_cast<float>(GetScreenWidth() / 2), 200}, 5, "../assets/spaceships/enemy/enemyship2.png", "../assets/sounds/enemylaser.ogg")
+	  enemy(Vector2{static_cast<float>(GetScreenWidth() / 2),static_cast<float>(GetScreenHeight() *1/5)}, 5, "../assets/spaceships/enemy/enemyship2.png", "../assets/sounds/enemylaser.ogg")
 {
 	InitLevelOne();
 	laserSpaceshipCollisionSound = LoadSound("../assets/sounds/explosion.ogg");
@@ -132,7 +132,7 @@ std::vector<Obstacle> Game::CreateObstacles()
 
 std::vector<Alien> Game::CreateAliens()
 {
-	int row = 5, column = 24, cellSize = 55;
+	int row = 5, column = 2, cellSize = 55;
 	std::vector<Alien> alienVector;
 	for (int i = 0; i <= row - 1; i++)
 	{
@@ -179,6 +179,18 @@ void Game::DeleteInactiveLasers()
 		if (!it->active)
 		{
 			it = alienLasers.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+	
+	for (auto it = enemy.lasers.begin(); it != enemy.lasers.end();)
+	{
+		if (!it->active)
+		{
+			it = enemy.lasers.erase(it);
 		}
 		else
 		{
@@ -276,7 +288,15 @@ void Game::CheckForCollisions()
 				}
 			}
 		}
+		if (CheckCollisionRecs(laser.GetRectangle(), enemy.GetRectangle()))
+		{
+
+				GameOver();
+			}
+		
 	}
+	
+	
 	// Alien lasers
 	for (auto &laser : alienLasers)
 	{
@@ -318,11 +338,48 @@ void Game::CheckForCollisions()
 			GameOver();
 		}
 	}
+	for (auto &laser : enemy.lasers)
+	{
+
+		if (CheckCollisionRecs(laser.GetRectangle(), player.GetRectangle()))
+		{
+
+			laser.active = false;
+			lives--;
+			PlaySound(laserSpaceshipCollisionSound);
+			if (lives == 0)
+			{
+               
+				GameOver();
+			}
+		}
+
+		for (auto &obstacle : obstacles)
+		{
+			auto it = obstacle.blocks.begin();
+
+			while (it != obstacle.blocks.end())
+			{
+				if (CheckCollisionRecs(it->GetRectangle(), laser.GetRectangle()))
+				{
+					it = obstacle.blocks.erase(it);
+					laser.active = false;
+				}
+				else
+				{
+					++it;
+				}
+			}
+		}
+	}
 }
 
 void Game::GameOver()
 {
 	run = false;
+	enemy.SetPosition(Vector2{ -100.0f, -100.0f }); 
+    player.lasers.clear();
+    enemy.lasers.clear();
 }
 
 void Game::checkHighScore()
@@ -388,4 +445,7 @@ void Game::InitLevelOne()
 void Game::TransitionLevelTwo()
 {
 	level++;
+	lives = 3;
+	player.lasers.clear();
+	alienLasers.clear();
 }

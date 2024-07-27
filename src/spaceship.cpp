@@ -66,6 +66,9 @@ void Spaceship::Reset()
 	position.y = GetScreenHeight() - spaceship.height - 100;
 	lasers.clear();
 }
+void Spaceship::SetPosition(Vector2 newPos) {
+    position = newPos;
+}
 
 // enemy spaceship
 
@@ -99,4 +102,7 @@ void EnemySpaceship::FireLaser()
 		lasers.push_back(Laser(Vector2{position.x + spaceship.width / 2 - 18, position.y + 20}, 8, "../assets/projectiles/laser2.png")); // laser position adjust ...suyash
 		PlaySound(laserSound);																											 // added laser sound - shrine
 	}
+}
+void EnemySpaceship::SetPosition(Vector2 newPos) {
+    position = newPos;
 }

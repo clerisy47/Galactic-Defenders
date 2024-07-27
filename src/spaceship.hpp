@@ -26,6 +26,8 @@ public:
 	Vector2 GetPosition();
 	void Reset();
 	std::vector<Laser> lasers;
+	void SetPosition(Vector2 newPos);
+
 };
 
 class EnemySpaceship : public Spaceship
@@ -36,4 +38,6 @@ public:
 	~EnemySpaceship();
 	void Move(const Vector2 &playerPosition);
 	void FireLaser();
+	void SetPosition(Vector2 newPos);
+
 };
