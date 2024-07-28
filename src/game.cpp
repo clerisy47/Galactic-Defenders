@@ -132,7 +132,7 @@ std::vector<Obstacle> Game::CreateObstacles()
 
 std::vector<Alien> Game::CreateAliens()
 {
-	int row = 5, column = 24, cellSize = 55;
+	int row = 5, column = 20, cellSize = 55;
 	std::vector<Alien> alienVector;
 	for (int i = 0; i <= row - 1; i++)
 	{
