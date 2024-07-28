@@ -39,6 +39,7 @@ public:
 	void InitLevelOne();
 	void TransitionLevelTwo();
 	int lives;
+	int enemyLives;
 	int score;
-	int highScore;	
+	int highScore;
 };
