@@ -6,7 +6,7 @@
 // note - speed of player must be some multiple of enemy i.e 5*2 = 10 pixel reasons.
 Game::Game()
 	: player(Vector2{static_cast<float>(GetScreenWidth() / 2), static_cast<float>(GetScreenHeight() - 100)}, 10, "../assets/spaceships/player/tiny_ship13.png", "../assets/sounds/laser.ogg"),
-	  enemy(Vector2{static_cast<float>(GetScreenWidth() / 2),static_cast<float>(GetScreenHeight() *1/5)}, 5, "../assets/spaceships/enemy/enemyship2.png", "../assets/sounds/enemylaser.ogg")
+	  enemy(Vector2{static_cast<float>(GetScreenWidth() / 2), static_cast<float>(GetScreenHeight() * 1 / 5)}, 5, "../assets/spaceships/enemy/enemyship2.png", "../assets/sounds/enemylaser.ogg")
 {
 	InitLevelOne();
 	laserSpaceshipCollisionSound = LoadSound("../assets/sounds/explosion.ogg");
@@ -185,7 +185,7 @@ void Game::DeleteInactiveLasers()
 			++it;
 		}
 	}
-	
+
 	for (auto it = enemy.lasers.begin(); it != enemy.lasers.end();)
 	{
 		if (!it->active)
@@ -290,13 +290,14 @@ void Game::CheckForCollisions()
 		}
 		if (CheckCollisionRecs(laser.GetRectangle(), enemy.GetRectangle()))
 		{
-
+			enemyLives--;
+			if (enemyLives == 0)
+			{
 				GameOver();
 			}
-		
+		}
 	}
-	
-	
+
 	// Alien lasers
 	for (auto &laser : alienLasers)
 	{
@@ -349,7 +350,7 @@ void Game::CheckForCollisions()
 			PlaySound(laserSpaceshipCollisionSound);
 			if (lives == 0)
 			{
-               
+
 				GameOver();
 			}
 		}
@@ -377,9 +378,9 @@ void Game::CheckForCollisions()
 void Game::GameOver()
 {
 	run = false;
-	enemy.SetPosition(Vector2{ -100.0f, -100.0f }); 
-    player.lasers.clear();
-    enemy.lasers.clear();
+	enemy.SetPosition(Vector2{-100.0f, -100.0f});
+	player.lasers.clear();
+	enemy.lasers.clear();
 }
 
 void Game::checkHighScore()
@@ -436,6 +437,7 @@ void Game::InitLevelOne()
 	alienDirection = 1;
 	timeLastAlienFired = 0.0;
 	lives = 3;
+	enemyLives = INT32_MAX;
 	score = 0;
 	highScore = loadHighScore();
 	run = true;
@@ -446,6 +448,7 @@ void Game::TransitionLevelTwo()
 {
 	level++;
 	lives = 3;
+	enemyLives = 5;
 	player.lasers.clear();
 	alienLasers.clear();
 }
