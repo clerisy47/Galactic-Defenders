@@ -2,11 +2,10 @@
 #include <iostream>
 #include <fstream>
 
-// added player via constructor - shrine
 // note - speed of player must be some multiple of enemy i.e 5*2 = 10 pixel reasons.
 Game::Game()
 	: player(Vector2{static_cast<float>(GetScreenWidth() / 2), static_cast<float>(GetScreenHeight() - 100)}, 10, "../assets/spaceships/player/tiny_ship13.png", "../assets/sounds/laser.ogg"),
-	  enemy(Vector2{static_cast<float>(GetScreenWidth() / 2),static_cast<float>(GetScreenHeight() *1/5)}, 5, "../assets/spaceships/enemy/enemyship2.png", "../assets/sounds/enemylaser.ogg")
+	  enemy(Vector2{static_cast<float>(GetScreenWidth() / 2), static_cast<float>(GetScreenHeight() * 1 / 5)}, 5, "../assets/spaceships/enemy/enemyship2.png", "../assets/sounds/enemylaser.ogg")
 {
 	InitLevelOne();
 	laserSpaceshipCollisionSound = LoadSound("../assets/sounds/explosion.ogg");
@@ -105,7 +104,6 @@ void Game::Update()
 		TransitionLevelTwo();
 	}
 
-	// Enemy movement and firing - shrine
 	if (level == 2)
 	{
 		enemy.Move(player.GetPosition());
@@ -132,7 +130,7 @@ std::vector<Obstacle> Game::CreateObstacles()
 
 std::vector<Alien> Game::CreateAliens()
 {
-	int row = 5, column = 24, cellSize = 55;
+	int row = 5, column = 20, cellSize = 55;
 	std::vector<Alien> alienVector;
 	for (int i = 0; i <= row - 1; i++)
 	{
@@ -185,7 +183,7 @@ void Game::DeleteInactiveLasers()
 			++it;
 		}
 	}
-	
+
 	for (auto it = enemy.lasers.begin(); it != enemy.lasers.end();)
 	{
 		if (!it->active)
@@ -234,14 +232,14 @@ void Game::AlienShoot()
 		Alien &alien = alienVector[GetRandomValue(0, alienVector.size() - 1)];
 		alienLasers.push_back(Laser({alien.position.x + alien.alienImages[alien.type - 1].width / 2,
 									 alien.position.y + alien.alienImages[alien.type - 1].height},
-									6, "../assets/projectiles/laser3.png")); // alien laser changed - shrine
+									6, "../assets/projectiles/laser3.png"));
 		timeLastAlienFired = GetTime();
 	}
 }
 
 void Game::CheckForCollisions()
 {
-	// Spaceship Lsers
+	// Spaceship Lasers
 	for (auto &laser : player.lasers)
 	{
 
@@ -290,13 +288,19 @@ void Game::CheckForCollisions()
 		}
 		if (CheckCollisionRecs(laser.GetRectangle(), enemy.GetRectangle()))
 		{
-
+			if (level == 2)
+			{
+				enemyLives--;
+				laser.active = false;
+			}
+			if (enemyLives == 0)
+			{
+				hasWon = true;
 				GameOver();
 			}
-		
+		}
 	}
-	
-	
+
 	// Alien lasers
 	for (auto &laser : alienLasers)
 	{
@@ -349,7 +353,7 @@ void Game::CheckForCollisions()
 			PlaySound(laserSpaceshipCollisionSound);
 			if (lives == 0)
 			{
-               
+
 				GameOver();
 			}
 		}
@@ -377,9 +381,9 @@ void Game::CheckForCollisions()
 void Game::GameOver()
 {
 	run = false;
-	enemy.SetPosition(Vector2{ -100.0f, -100.0f }); 
-    player.lasers.clear();
-    enemy.lasers.clear();
+	enemy.SetPosition(Vector2{-100.0f, -100.0f});
+	player.lasers.clear();
+	enemy.lasers.clear();
 }
 
 void Game::checkHighScore()
@@ -427,7 +431,6 @@ void Game::Reset()
 	alienVector.clear();
 	alienLasers.clear();
 	obstacles.clear();
-	
 }
 
 void Game::InitLevelOne()
@@ -437,17 +440,19 @@ void Game::InitLevelOne()
 	alienDirection = 1;
 	timeLastAlienFired = 0.0;
 	lives = 3;
+	enemyLives = INT32_MAX;
 	score = 0;
 	highScore = loadHighScore();
+	hasWon = false;
 	run = true;
 	level = 1;
-	
 }
 
 void Game::TransitionLevelTwo()
 {
 	level++;
 	lives = 3;
+	enemyLives = 10;
 	player.lasers.clear();
 	alienLasers.clear();
 }
