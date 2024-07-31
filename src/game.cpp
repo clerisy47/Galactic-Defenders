@@ -427,6 +427,7 @@ void Game::Reset()
 	alienVector.clear();
 	alienLasers.clear();
 	obstacles.clear();
+	
 }
 
 void Game::InitLevelOne()
@@ -440,6 +441,7 @@ void Game::InitLevelOne()
 	highScore = loadHighScore();
 	run = true;
 	level = 1;
+	
 }
 
 void Game::TransitionLevelTwo()
