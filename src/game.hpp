@@ -42,4 +42,5 @@ public:
 	int enemyLives;
 	int score;
 	int highScore;
+	bool hasWon;
 };
