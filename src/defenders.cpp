@@ -36,7 +36,7 @@ int main()
 	Texture2D gameOverImage = LoadTexture("../assets/buttons/you_lose.png");
 	Texture2D livesImage = LoadTexture("../assets/buttons/hp.png");
 
-	Game *game = nullptr; // Declare a pointer to the Game object - shrine
+	Game *game = nullptr;
 	bool gameOverSoundPlayed = false;
 
 	while (!WindowShouldClose())
@@ -81,9 +81,19 @@ int main()
 
 			ClearBackground(RAYWHITE);
 			DrawTexture(gameBackground, 0, 0, WHITE);
-			if (game->run)
+			if (game->run && game->level == 1)
 			{
 				DrawTexture(level1Image, 50, 30, WHITE);
+			}
+			else if (game->run && game->level == 2)
+			{
+				DrawTexture(level2Image, 50, 30, WHITE);
+			}
+			else if (game->hasWon)
+			{
+				game->Reset();
+				DrawTextEx(font, "YOU WON", {static_cast<float>(Window::width / 2) - 400, 150}, 200, 5, WHITE);
+				DrawTextEx(font, "Press ESC to return to MENU.", {static_cast<float>(Window::width / 2) - 350, 400}, 50, 2, yellow);
 			}
 			else
 			{
