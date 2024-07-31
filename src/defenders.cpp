@@ -81,9 +81,13 @@ int main()
 
 			ClearBackground(RAYWHITE);
 			DrawTexture(gameBackground, 0, 0, WHITE);
-			if (game->run)
+			if (game->run && game->level == 1)
 			{
 				DrawTexture(level1Image, 50, 30, WHITE);
+			}
+			else if (game->run && game->level == 2)
+			{
+				DrawTexture(level2Image, 50, 30, WHITE);
 			}
 			else if (game->hasWon)
 			{
