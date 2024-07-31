@@ -288,7 +288,11 @@ void Game::CheckForCollisions()
 		}
 		if (CheckCollisionRecs(laser.GetRectangle(), enemy.GetRectangle()))
 		{
-			enemyLives--;
+			if (level == 2)
+			{
+				enemyLives--;
+				laser.active = false;
+			}
 			if (enemyLives == 0)
 			{
 				hasWon = true;
