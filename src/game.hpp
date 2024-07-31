@@ -16,7 +16,6 @@ private:
 	void MoveDownAliens(int distance);
 	void AlienShoot();
 	void CheckForCollisions();
-	int level = 0;
 	int alienDirection;
 	std::vector<Alien> alienVector;
 	std::vector<Laser> alienLasers;
@@ -39,6 +38,9 @@ public:
 	void InitLevelOne();
 	void TransitionLevelTwo();
 	int lives;
+	int enemyLives;
 	int score;
-	int highScore;	
+	int highScore;
+	bool hasWon;
+	int level;
 };
