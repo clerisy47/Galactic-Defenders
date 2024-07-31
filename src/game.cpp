@@ -2,7 +2,6 @@
 #include <iostream>
 #include <fstream>
 
-// added player via constructor - shrine
 // note - speed of player must be some multiple of enemy i.e 5*2 = 10 pixel reasons.
 Game::Game()
 	: player(Vector2{static_cast<float>(GetScreenWidth() / 2), static_cast<float>(GetScreenHeight() - 100)}, 10, "../assets/spaceships/player/tiny_ship13.png", "../assets/sounds/laser.ogg"),
@@ -105,7 +104,6 @@ void Game::Update()
 		TransitionLevelTwo();
 	}
 
-	// Enemy movement and firing - shrine
 	if (level == 2)
 	{
 		enemy.Move(player.GetPosition());
@@ -234,14 +232,14 @@ void Game::AlienShoot()
 		Alien &alien = alienVector[GetRandomValue(0, alienVector.size() - 1)];
 		alienLasers.push_back(Laser({alien.position.x + alien.alienImages[alien.type - 1].width / 2,
 									 alien.position.y + alien.alienImages[alien.type - 1].height},
-									6, "../assets/projectiles/laser3.png")); // alien laser changed - shrine
+									6, "../assets/projectiles/laser3.png"));
 		timeLastAlienFired = GetTime();
 	}
 }
 
 void Game::CheckForCollisions()
 {
-	// Spaceship Lsers
+	// Spaceship Lasers
 	for (auto &laser : player.lasers)
 	{
 
@@ -293,6 +291,7 @@ void Game::CheckForCollisions()
 			enemyLives--;
 			if (enemyLives == 0)
 			{
+				hasWon = true;
 				GameOver();
 			}
 		}
@@ -440,6 +439,7 @@ void Game::InitLevelOne()
 	enemyLives = INT32_MAX;
 	score = 0;
 	highScore = loadHighScore();
+	hasWon = false;
 	run = true;
 	level = 1;
 }
