@@ -27,6 +27,7 @@ int main()
 	Music musicMenu = LoadMusicStream("../assets/sounds/backgroundmenu.ogg");
 	Music musicGame = LoadMusicStream("../assets/sounds/backgroundgame.ogg");
 	Sound gameOverSound = LoadSound("../assets/sounds/youlose.ogg");
+	Sound youWin = LoadSound("../assets/sounds/youwin.ogg");
 
 	PlayMusicStream(musicMenu); // Start playing the music
 
@@ -38,6 +39,7 @@ int main()
 
 	Game *game = nullptr;
 	bool gameOverSoundPlayed = false;
+	bool youWinSoundPlayed = false;
 
 	while (!WindowShouldClose())
 	{
@@ -57,6 +59,7 @@ int main()
 				delete game;
 				game = nullptr;
 				gameOverSoundPlayed = false;
+				youWinSoundPlayed = false;
 				std::cout << "Game object deleted" << std::endl;
 			}
 			break;
@@ -94,6 +97,12 @@ int main()
 				game->Reset();
 				DrawTextEx(font, "YOU WON", {static_cast<float>(Window::width / 2) - 400, 150}, 200, 5, WHITE);
 				DrawTextEx(font, "Press ESC to return to MENU.", {static_cast<float>(Window::width / 2) - 350, 400}, 50, 2, yellow);
+					if (!youWinSoundPlayed)
+				{
+
+					PlaySound(youWin);
+					youWinSoundPlayed = true;
+				}
 			}
 			else
 			{
@@ -145,6 +154,7 @@ int main()
 	UnloadMusicStream(musicMenu); // Unload music stream
 	UnloadMusicStream(musicGame); // Unload game music stream
 	UnloadSound(gameOverSound);
+	UnloadSound(youWin);
 	CloseAudioDevice(); // Close audio device
 	CloseWindow();		// Close window
 

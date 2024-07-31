@@ -43,8 +43,8 @@ void Spaceship::FireLaser()
 	if (GetTime() - lastFireTime >= 0.35)
 	{
 		lastFireTime = GetTime();
-		lasers.push_back(Laser(Vector2{position.x + spaceship.width / 2 - 10, position.y - 10}, -10, "../assets/projectiles/laser1.png")); // laser position adjust ...suyash
-		PlaySound(laserSound);																											   // added laser sound - shrine
+		lasers.push_back(Laser(Vector2{position.x + spaceship.width / 2 - 10, position.y - 10}, -10, "../assets/projectiles/laser1.png"));
+		PlaySound(laserSound);																											  
 	}
 }
 
@@ -99,8 +99,8 @@ void EnemySpaceship::FireLaser()
 	if (GetTime() - lastFireTime >= 1)
 	{
 		lastFireTime = GetTime();
-		lasers.push_back(Laser(Vector2{position.x + spaceship.width / 2 - 18, position.y + 20}, 8, "../assets/projectiles/laser2.png")); // laser position adjust ...suyash
-		PlaySound(laserSound);																											 // added laser sound - shrine
+		lasers.push_back(Laser(Vector2{position.x + spaceship.width / 2 - 18, position.y + 20}, 8, "../assets/projectiles/laser2.png")); 
+		PlaySound(laserSound);																											
 	}
 }
 void EnemySpaceship::SetPosition(Vector2 newPos) {

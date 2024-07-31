@@ -13,10 +13,9 @@ protected:
 	Texture2D spaceship;
 	void LimitMovement();
 	double lastFireTime;
-	Sound laserSound; // added laser sound - shrine
-
+	Sound laserSound; 
 public:
-	Spaceship(const Vector2 &position, int speed, const char *path, const char *soundpath); // Modified constructor to take position , speed  and path to texture
+	Spaceship(const Vector2 &position, int speed, const char *path, const char *soundpath); 
 	~Spaceship();
 	void Draw();
 	void MoveLeft();
