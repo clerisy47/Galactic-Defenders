@@ -36,7 +36,7 @@ int main()
 	Texture2D gameOverImage = LoadTexture("../assets/buttons/you_lose.png");
 	Texture2D livesImage = LoadTexture("../assets/buttons/hp.png");
 
-	Game *game = nullptr; // Declare a pointer to the Game object - shrine
+	Game *game = nullptr;
 	bool gameOverSoundPlayed = false;
 
 	while (!WindowShouldClose())
