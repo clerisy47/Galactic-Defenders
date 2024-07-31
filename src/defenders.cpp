@@ -97,7 +97,7 @@ int main()
 				game->Reset();
 				DrawTextEx(font, "YOU WON", {static_cast<float>(Window::width / 2) - 400, 150}, 200, 5, WHITE);
 				DrawTextEx(font, "Press ESC to return to MENU.", {static_cast<float>(Window::width / 2) - 350, 400}, 50, 2, yellow);
-					if (!youWinSoundPlayed)
+				if (!youWinSoundPlayed)
 				{
 
 					PlaySound(youWin);
