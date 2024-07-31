@@ -448,7 +448,7 @@ void Game::TransitionLevelTwo()
 {
 	level++;
 	lives = 3;
-	enemyLives = 5;
+	enemyLives = 10;
 	player.lasers.clear();
 	alienLasers.clear();
 }
